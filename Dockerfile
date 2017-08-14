@@ -61,13 +61,13 @@ ENV HTTP2_HOSTS=
 # OCSERV
 ENV ENABLE_OCSERV true
 ENV OCSERV_INSECURE false
-ENV OCSERV_HOSTS
+ENV OCSERV_HOSTS=
 
 
 ADD etc /etc/love/templates
 
 ######## INSTALLATION #########
-RUN apk add --no-cache --virtual && \
+RUN apk add --no-cache curl bash && \
     curl -sSO https://raw.githubusercontent.com/tests-always-included/mo/master/mo && \
     mv mo /usr/local/bin && \
     chmod +x /usr/local/bin/mo
@@ -83,7 +83,6 @@ RUN set -ex && \
                                 automake \
                                 make \
                                 build-base \
-                                curl \
                                 libev-dev \
                                 libtool \
                                 linux-headers \
