@@ -5,7 +5,7 @@
     "loglevel": "warning"
   },
   "inbound": {
-    "port": {{V2RAY_TLS_PORT}},
+    "port": {{V2RAY_HTTP_PORT}},
     "protocol": "vmess",
     "settings": {
       "udp": true,
@@ -23,17 +23,7 @@
     },
     "streamSettings": {
       "network": "tcp",
-      "security": "tls",
-      "tlsSettings": {
-        "serverName": "",
-        "allowInsecure": true,
-        "certificates": [
-          {
-            "certificateFile": "/etc/v2ray/v2ray.crt",
-            "keyFile": "/etc/v2ray/v2ray.key"
-          }
-        ]
-      },
+      "security": "auto",
       "tcpSettings": {
         "connectionReuse": true,
         "header": {
@@ -89,59 +79,86 @@
             }
           }
         }
-      },
+      }
     }
   },
-  "inboundDetour":[
+  "inboundDetour": [
     {
-      "protocol":"vmess",
-      "port": {{V2RAY_WS_PORT}},
-      "listen": "{{LISTEN_ADDRESS}}",
+      "port": {{V2RAY_TLS_PORT}},
+      "protocol": "vmess",
       "settings": {
-        "udp":true,
-        "clients":[
+        "udp": true,
+        "clients": [
           {
-            "id":"{{V2RAY_UUID}}",
-            "alterId":32,
-            "level":1
+            "id": "{{V2RAY_UUID}}",
+            "level": 1,
+            "alterId": 32
+          }
+        ],
+        "streamSettings": {
+          "network": "tcp",
+          "security": "tls",
+          "tcpSettings": {
+            "connectionReuse": true,
+            "header": {
+              "type": "none"
+            }
+          },
+          "tlsSettings": {
+            "serverName": "{{V2RAY_DOMAINS}}",
+            "certificates": [
+              {
+                "certificateFile": "/srv/certs/{{V2RAY_DOMAINS}}.crt",
+                "keyFile": "/srv/certs/{{V2RAY_DOMAINS}}.key"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "protocol": "vmess",
+      "port": {{V2RAY_WS_PORT}},
+      "settings": {
+        "udp": true,
+        "clients": [
+          {
+            "id": "{{V2RAY_UUID}}",
+            "alterId": 32,
+            "level": 1
           }
         ]
       },
-      "streamSettings":{
-        "network":"ws",
+      "streamSettings": {
+        "network": "ws",
         "security": "tls",
-          "tlsSettings": {
-            "serverName": "",
-            "allowInsecure": true,
-            "certificates": [
-                {
-                  "certificateFile": "/etc/v2ray/v2ray.crt",
-                  "keyFile": "/etc/v2ray/v2ray.key"
-                }
-            ]
-          },
-        "wsSettings":
-        {
-          "connectionReuse":true,
-          "path":""
+        "tlsSettings": {
+          "serverName": "{{V2RAY_DOMAINS}}",
+          "allowInsecure": true,
+          "certificates": [
+            {
+              "certificateFile": "/etc/v2ray/{{V2RAY_DOMAINS}}.crt",
+              "keyFile": "/etc/v2ray/{{V2RAY_DOMAINS}}.key"
+            }
+          ]
+        },
+        "wsSettings": {
+          "connectionReuse": true,
+          "path": "/"
         }
       }
     }
   ],
   "outbound": {
     "protocol": "freedom",
-    "settings": {},
-    "mux": {
-      "concurrency": 8,
-      "enabled": false
-    }
+    "settings": {}
   },
   "outboundDetour": [
     {
       "protocol": "blackhole",
       "settings": {},
       "tag": "blocked"
-    },
+    }
   ],
   "routing": {
     "strategy": "rules",
