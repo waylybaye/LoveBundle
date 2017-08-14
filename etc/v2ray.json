@@ -1,0 +1,46 @@
+{
+  "log": {
+    "access": "/dev/stdout",
+    "error": "/dev/stderr",
+    "loglevel": "warning"
+  },
+  "inbound": {
+    "port": {{V2RAY_PORT}},
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "{{V2RAY_UUID}}",
+          "level": 1,
+          "alterId": 32
+        }
+      ],
+      "default": {
+        "level": 1,
+        "alterId": 32
+      }
+    },
+    "streamSettings": {
+      "network": "kcp",
+      "security": "tls",
+      "kcpSettings": {
+        "header": {
+          "type": "wechat-video"
+        }
+      },
+      "tlsSettings": {
+        "serverName": "139.162.109.83.xip.io",
+        "certificates": [
+          {
+            "certificateFile": "/certs/139.162.109.83.xip.io.crt",
+            "keyFile": "/certs/139.162.109.83.xip.io.key"
+          }
+        ]
+      }
+    }
+  },
+  "outbound": {
+    "protocol": "freedom",
+    "settings": {}
+  }
+}
