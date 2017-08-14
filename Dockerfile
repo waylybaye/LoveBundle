@@ -3,9 +3,9 @@ MAINTAINER HyperApp <hyperappcloud@gmail.com>
 
 #### Build ARGS ####
 
-ARG SS_VER=3.0.8
-ARG SS_OBFS_VER=0.0.3
-ARG V2RAY_VER=
+ARG SS_VER 3.0.8
+ARG SS_OBFS_VER 0.0.3
+ARG V2RAY_VER 2.34
 
 #### VOLUME
 ENV HTTP_PORT=
@@ -41,17 +41,19 @@ ENV OCSERV_PORT 21030
 # Shadowsocks
 ENV ENABLE_SS true
 ENV SS_METHOD rc4-md5
-ENV SS_HOSTS bing.com
+ENV SS_HTTP_DOMAINS www.bing.com
+ENV SS_TLS_DOMAINS bing.com
 
 # ShadowsocksR
 ENV ENABLE_SSR true
 ENV SSR_METHOD rc4-md5
-ENV SSR_HOSTS cloudflare.com
+ENV SSR_HTTP_DOMAINS www.cloudflare.com
+ENV SSR_TLS_DOMAINS cloudflare.com
 
 # V2ray
 ENV ENABLE_V2RAY true
 ENV V2RAY_INSECURE false
-ENV V2RAY_HOSTS yahoo.com
+ENV V2RAY_DOMAINS yahoo.com
 
 # nghttpx
 ENV ENABLE_HTTP2 true
@@ -122,7 +124,15 @@ RUN set -ex && \
     rm -rf /tmp/*
 
 
-##### Install nghttpx
+#### Install V2ray
+RUN curl -L -o /tmp/v2ray/v2ray.zip \
+        https://github.com/v2ray/v2ray-core/releases/download/v${V2RAY_VER}/v2ray-linux-64.zip \
+    && unzip /tmp/v2ray/v2ray.zip -d /tmp/v2ray/ \
+    && mv /tmp/v2ray/v2ray-v${V2RAY_VER}-linux-64/v2ray /usr/local/bin/v2ray \
+    && rm -rf /tmp/v2ray
+
+
+#### Install nghttpx
 
 RUN apk add --no-cache nghttp2 openssl ca-certificates
 ENV FRONTEND=*,443
