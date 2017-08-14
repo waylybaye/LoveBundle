@@ -7,5 +7,24 @@ export HA_SSR_TLS_DOMAINS="${SSR_TLS_DOMAINS//,/ }"
 export HA_V2RAY_DOMAINS="${V2RAY_DOMAINS//,/ }"
 cat /etc/love/templates/haproxy.conf | mo > /etc/love/haproxy.conf
 cat /etc/love/templates/v2ray.json | mo > /etc/love/v2ray.json
+cat /etc/love/templates/squid.conf | mo > /etc/love/squid.conf
+
+if [ -n "$ENABLE_HTTP2" ];then
+  htpasswd -bc /etc/love/passwd "${LOVE_USERNAME}" "${LOVE_PASSWORD}"
+  CHOWN=$(/usr/bin/which chown)
+  SQUID=$(/usr/bin/which squid)
+  "$CHOWN" -R squid:squid /var/cache/squid
+  "$CHOWN" -R squid:squid /var/log/squid
+
+  if [ ! -f  /var/spool/squid ]; then
+    echo "initializing spool ..."
+    mkdir /var/spool/squid
+  fi
+
+  if [ ! -f  /var/cache/squid ]; then
+    echo "initializing cache ..."
+    squid -zN
+  fi
+fi
 
 exec "$@"

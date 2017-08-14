@@ -39,6 +39,7 @@ ENV V2RAY_HTTP_PORT 21028
 ENV V2RAY_TLS_PORT 21029
 ENV V2RAY_WS_PORT 21030
 ENV HTTP2_PORT 21031
+ENV HTTP_PROXY_PORT 21032
 ENV OCSERV_PORT 21033
 
 # Shadowsocks
@@ -80,6 +81,7 @@ RUN apk add --no-cache curl bash && \
 
 #### Install supervisord ####
 RUN apk add --no-cache python py-pip && pip install supervisor
+
 
 #### Install Shadowsocks ####
 RUN set -ex && \
@@ -145,15 +147,7 @@ RUN curl -L -o /tmp/v2ray.zip \
 
 #### Install nghttpx
 
-RUN apk add --no-cache nghttp2 openssl ca-certificates
-ENV FRONTEND=*,443
-ENV BACKEEND=backend,8080
-ENV DOMAIN=example.com
-ENV OPTIONS=""
-
-EXPOSE 443
-VOLUME /certs/
-
+RUN apk add --no-cache nghttp2 openssl ca-certificates squid apache2-utils
 #CMD nghttpx --http2-proxy -f $FRONTEND -b $BACKEEND $OPTIONS /certs/${DOMAIN}.key /certs/${DOMAIN}.crt
 
 
