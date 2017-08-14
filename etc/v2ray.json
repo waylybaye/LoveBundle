@@ -94,25 +94,25 @@
             "level": 1,
             "alterId": 32
           }
-        ],
-        "streamSettings": {
-          "network": "tcp",
-          "security": "tls",
-          "tcpSettings": {
-            "connectionReuse": true,
-            "header": {
-              "type": "none"
-            }
-          },
-          "tlsSettings": {
-            "serverName": "{{V2RAY_DOMAINS}}",
-            "certificates": [
-              {
-                "certificateFile": "/srv/certs/{{V2RAY_DOMAINS}}.crt",
-                "keyFile": "/srv/certs/{{V2RAY_DOMAINS}}.key"
-              }
-            ]
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tcpSettings": {
+          "connectionReuse": true,
+          "header": {
+            "type": "none"
           }
+        },
+        "tlsSettings": {
+          "serverName": "{{V2RAY_DOMAINS}}",
+          "certificates": [
+            {
+              "certificateFile": "/srv/certs/{{V2RAY_DOMAINS}}.crt",
+              "keyFile": "/srv/certs/{{V2RAY_DOMAINS}}.key"
+            }
+          ]
         }
       }
     },
