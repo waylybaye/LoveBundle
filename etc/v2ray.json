@@ -21,13 +21,8 @@
       }
     },
     "streamSettings": {
-      "network": "kcp",
+      "network": "tcp",
       "security": "tls",
-      "kcpSettings": {
-        "header": {
-          "type": "wechat-video"
-        }
-      },
       "tlsSettings": {
         "serverName": "139.162.109.83.xip.io",
         "certificates": [

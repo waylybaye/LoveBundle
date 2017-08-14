@@ -13,7 +13,8 @@ ENV TLS_PORT=
 
 RUN mkdir -p /srv/certs && \
     mkdir -p /var/log/love && \
-    mkdir -p /etc/love/
+    mkdir -p /etc/love/ && \
+    mkdir -p /opt/
 
 # certs dir
 VOLUME /srv/certs/
@@ -46,7 +47,8 @@ ENV SS_TLS_DOMAINS bing.com
 
 # ShadowsocksR
 ENV ENABLE_SSR true
-ENV SSR_METHOD rc4-md5
+ENV SSR_METHOD none
+ENV SSR_PROTOCOL auth-chain-b
 ENV SSR_HTTP_DOMAINS www.cloudflare.com
 ENV SSR_TLS_DOMAINS cloudflare.com
 
@@ -123,6 +125,12 @@ RUN set -ex && \
     apk del .build-deps && \
     rm -rf /tmp/*
 
+
+#### Install SSR
+ADD shadowsocksr-manyuser.zip /tmp
+RUN unzip /tmp/shadowsocksr-manyuser.zip -d /tmp/ \
+    && mv /tmp/shadowsocksr-manyuser /opt/ \
+    && rm /tmp/shadowsocksr-manyuser.zip
 
 #### Install V2ray
 RUN curl -L -o /tmp/v2ray.zip \
