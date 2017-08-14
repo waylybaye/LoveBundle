@@ -48,7 +48,7 @@ ENV SS_TLS_DOMAINS bing.com
 # ShadowsocksR
 ENV ENABLE_SSR true
 ENV SSR_METHOD none
-ENV SSR_PROTOCOL auth-chain-b
+ENV SSR_PROTOCOL auth_chain_b
 ENV SSR_HTTP_DOMAINS www.cloudflare.com
 ENV SSR_TLS_DOMAINS cloudflare.com
 
