@@ -5,6 +5,7 @@ export HA_SS_HTTP_DOMAINS="${SS_HTTP_DOMAINS//,/ }"
 export HA_SSR_HTTP_DOMAINS="${SSR_HTTP_DOMAINS//,/ }"
 export HA_SSR_TLS_DOMAINS="${SSR_TLS_DOMAINS//,/ }"
 export HA_V2RAY_DOMAINS="${V2RAY_DOMAINS//,/ }"
+export HA_HTTP2_DOMAIN="${HTTP2_DOMAIN//,/ }"
 cat /etc/love/templates/haproxy.conf | mo > /etc/love/haproxy.conf
 cat /etc/love/templates/v2ray.json | mo > /etc/love/v2ray.json
 cat /etc/love/templates/squid.conf | mo > /etc/love/squid.conf
@@ -23,7 +24,7 @@ if [ -n "$ENABLE_HTTP2" ];then
 
   if [ ! -f  /var/cache/squid ]; then
     echo "initializing cache ..."
-    squid -zN
+    squid -f /etc/love/squid.conf -zN
   fi
 fi
 
