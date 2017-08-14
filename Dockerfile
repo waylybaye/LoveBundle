@@ -3,9 +3,9 @@ MAINTAINER HyperApp <hyperappcloud@gmail.com>
 
 #### Build ARGS ####
 
-ARG SS_VER 3.0.8
-ARG SS_OBFS_VER 0.0.3
-ARG V2RAY_VER 2.34
+ARG SS_VER=3.0.8
+ARG SS_OBFS_VER=0.0.3
+ARG V2RAY_VER=2.34
 
 #### VOLUME
 ENV HTTP_PORT=
@@ -125,11 +125,12 @@ RUN set -ex && \
 
 
 #### Install V2ray
-RUN curl -L -o /tmp/v2ray/v2ray.zip \
+RUN curl -L -o /tmp/v2ray.zip \
         https://github.com/v2ray/v2ray-core/releases/download/v${V2RAY_VER}/v2ray-linux-64.zip \
-    && unzip /tmp/v2ray/v2ray.zip -d /tmp/v2ray/ \
-    && mv /tmp/v2ray/v2ray-v${V2RAY_VER}-linux-64/v2ray /usr/local/bin/v2ray \
-    && rm -rf /tmp/v2ray
+    && unzip /tmp/v2ray.zip -d /tmp/ \
+    && mv /tmp/v2ray-v${V2RAY_VER}-linux-64/v2ray /usr/local/bin/v2ray \
+    && chmod +x /usr/local/bin/v2ray \
+    && rm -rf /tmp/v2ray*
 
 
 #### Install nghttpx
