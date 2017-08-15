@@ -43,7 +43,7 @@ if [ -f "/srv/certs/${OCSERV_DOMAIN}.crt" ]; then
   export OCSERV_CERT="/srv/certs/${OCSERV_DOMAIN}.crt"
   export OCSERV_KEY="/srv/certs/${OCSERV_DOMAIN}.key"
 else
-  export OCSERV_CERT="${CA_ROOT}/${OCSERV_DOMAIN}.self-signed.cert"
+  export OCSERV_CERT="${CA_ROOT}/${OCSERV_DOMAIN}.self-signed.crt"
   export OCSERV_KEY="${CA_ROOT}/${OCSERV_DOMAIN}.self-signed.key"
 fi
 
