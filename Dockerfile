@@ -10,6 +10,8 @@ ARG V2RAY_VER=2.34
 #### VOLUME
 ENV HTTP_PORT=
 ENV TLS_PORT=
+ENV DASHBOARD_PORT=
+ENV DASHBOARD_PASS hyperapp
 
 RUN mkdir -p /srv/certs && \
     mkdir -p /var/log/love && \
