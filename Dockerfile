@@ -12,6 +12,7 @@ ENV HTTP_PORT=
 ENV TLS_PORT=
 ENV DASHBOARD_PORT=
 ENV DASHBOARD_PASS hyperapp
+ENV CA_ROOT /src/ca
 
 RUN mkdir -p /srv/certs && \
     mkdir -p /var/log/love && \
@@ -157,5 +158,6 @@ RUN apk add --no-cache nghttp2 openssl ca-certificates squid apache2-utils
 RUN apk add --no-cache haproxy
 
 ADD entrypoint.sh /usr/local/bin
+ADD gencert.sh /usr/local/bin
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["supervisord", "--nodaemon", "--configuration", "/etc/love/supervisord.conf"]
