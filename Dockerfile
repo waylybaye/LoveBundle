@@ -159,6 +159,27 @@ RUN apk add --no-cache nghttp2 openssl ca-certificates squid apache2-utils
 #### Install ocserv
 RUN apk add --update --no-cache musl-dev iptables libev openssl gnutls-dev readline-dev libnl3-dev lz4-dev libseccomp-dev gnutls-utils
 
+RUN buildDeps="xz gcc autoconf make linux-headers libev-dev  "; \
+	set -x \
+	&& apk add --no-cache $buildDeps \
+	&& mkdir /src && cd /src \
+	&& OC_FILE="ocserv-$OC_VERSION" \
+	&& rm -fr download.html \
+	&& wget ftp://ftp.infradead.org/pub/ocserv/$OC_FILE.tar.xz \
+	&& tar xJf $OC_FILE.tar.xz \
+	&& rm -fr $OC_FILE.tar.xz \
+	&& cd $OC_FILE \
+	&& sed -i '/#define DEFAULT_CONFIG_ENTRIES /{s/96/200/}' src/vpn.h \
+	&& ./configure \
+	&& make -j"$(nproc)" \
+	&& make install \
+	&& mkdir -p /etc/ocserv \
+	&& cp ./doc/sample.config /etc/ocserv/ocserv.conf \
+	&& cd \
+	&& rm -fr ./$OC_FILE \
+	&& apk del --purge $buildDeps \
+        && rm -rf /src
+
 
 ### Install haproxy
 RUN apk add --no-cache haproxy

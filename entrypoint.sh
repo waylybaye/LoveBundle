@@ -36,8 +36,20 @@ else
   export V2RAY_WS_KEY_FILE="${CA_ROOT}/${V2RAY_WS_DOMAIN}.self-signed.key"
 fi
 
+gencert.sh $OCSERV_DOMAIN $LOVE_USERNAME $LOVE_PASSWORD
+export OCSERV_CA_CERT="$CA_ROOT/hyperapp-ca-key.pem"
+
+if [ -f "/srv/certs/${OCSERV_DOMAIN}.crt" ]; then
+  export OCSERV_CERT="/srv/certs/${OCSERV_DOMAIN}.crt"
+  export OCSERV_KEY="/srv/certs/${OCSERV_DOMAIN}.key"
+else
+  export OCSERV_CERT="${CA_ROOT}/${OCSERV_DOMAIN}.self-signed.cert"
+  export OCSERV_KEY="${CA_ROOT}/${OCSERV_DOMAIN}.self-signed.key"
+fi
+
 cat /etc/love/templates/v2ray.json | mo > /etc/love/v2ray.json
 cat /etc/love/templates/squid.conf | mo > /etc/love/squid.conf
+cat /etc/love/templates/ocserv.conf | mo > /etc/love/ocserv.conf
 
 if [ -n "$ENABLE_HTTP2" ];then
   htpasswd -bc /etc/love/passwd "${LOVE_USERNAME}" "${LOVE_PASSWORD}"
@@ -57,6 +69,6 @@ if [ -n "$ENABLE_HTTP2" ];then
   fi
 fi
 
-sleep 10 
+sleep 10
 
 exec "$@"
