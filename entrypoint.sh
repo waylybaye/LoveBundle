@@ -2,7 +2,7 @@
 
 if [ -f "/srv/certs/${HTTP2_DOMAIN}.crt" ]; then
   export NGHTTPX_CERT="/srv/certs/${HTTP2_DOMAIN}.crt"
-  export NGHTTPX_CERT="/srv/certs/${HTTP2_DOMAIN}.key"
+  export NGHTTPX_KEY="/srv/certs/${HTTP2_DOMAIN}.key"
 else
   gencert.sh $HTTP2_DOMAIN
   export NGHTTPX_CERT="${CA_ROOT}/${HTTP2_DOMAIN}.self-signed.crt"
@@ -23,13 +23,13 @@ if [ -f "/srv/certs/${V2RAY_TLS_DOMAIN}.crt" ]; then
   export V2RAY_TLS_KEY_FILE="/srv/certs/${V2RAY_TLS_DOMAIN}.key"
 else
   gencert.sh $V2RAY_TLS_DOMAIN
-  export V2RAY_TLS_CERT_FILE="${CA_ROOT}/${V2RAY_TLS_DOMAIN}-self-signed.crt"
-  export V2RAY_TLS_KEY_FILE="${CA_ROOT}/${V2RAY_TLS_DOMAIN}-self-signed.key"
+  export V2RAY_TLS_CERT_FILE="${CA_ROOT}/${V2RAY_TLS_DOMAIN}.self-signed.crt"
+  export V2RAY_TLS_KEY_FILE="${CA_ROOT}/${V2RAY_TLS_DOMAIN}.self-signed.key"
 fi
 
 if [ -f "/srv/certs/${V2RAY_WS_DOMAIN}.crt" ]; then
   export V2RAY_WS_CERT_FILE="/srv/certs/${V2RAY_WS_DOMAIN}.crt"
-  export V2RAY_WS_KEY_FILE="/srv/certs/${V2RAY_WS_DOMAIN}.crt"
+  export V2RAY_WS_KEY_FILE="/srv/certs/${V2RAY_WS_DOMAIN}.key"
 else
   gencert.sh $V2RAY_WS_DOMAIN
   export V2RAY_WS_CERT_FILE="${CA_ROOT}/${V2RAY_WS_DOMAIN}.self-signed.crt"
@@ -56,5 +56,7 @@ if [ -n "$ENABLE_HTTP2" ];then
     squid -f /etc/love/squid.conf -zN
   fi
 fi
+
+sleep 10 
 
 exec "$@"
