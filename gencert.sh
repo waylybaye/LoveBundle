@@ -51,7 +51,7 @@ if [ ! -f "${CERTS_DIR}/hyperapp-ca-key.pem" ]; then
            --outfile hyperapp-ca-key.pem
 
   certtool --generate-self-signed \
-           --load-privkey /etc/ocserv/certs/hyperapp-ca-key.pem \
+           --load-privkey hyperapp-ca-key.pem \
            --template hyperapp-ca.tmpl \
            --outfile hyperapp-ca-cert.pem
 fi
@@ -71,7 +71,7 @@ if [ ! -f "${CERTS_DIR}/${DOMAIN}".self-signed.crt ]; then
 fi
 
 
-if [ ! -f "${CERTS_DIR}/${CLIENT}".p12 ]; then
+if [ ! -z "$CLIENT" ] && [ ! -f "${CERTS_DIR}/${CLIENT}".p12 ]; then
   echo "[INFO] generating client certs"
 
   # gen client keys

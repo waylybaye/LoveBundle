@@ -12,15 +12,17 @@ ENV HTTP_PORT=
 ENV TLS_PORT=
 ENV DASHBOARD_PORT=
 ENV DASHBOARD_PASS hyperapp
-ENV CA_ROOT /src/ca
+ENV CA_ROOT /srv/ca
 
 RUN mkdir -p /srv/certs && \
     mkdir -p /var/log/love && \
     mkdir -p /etc/love/ && \
-    mkdir -p /opt/
+    mkdir -p /opt/ && \
+    mkdir -p $CA_ROOT
 
 # certs dir
 VOLUME /srv/certs/
+VOLUME $CA_ROOT
 # log dir
 VOLUME /var/log/love
 # config dir
@@ -154,8 +156,13 @@ RUN apk add --no-cache nghttp2 openssl ca-certificates squid apache2-utils
 #CMD nghttpx --http2-proxy -f $FRONTEND -b $BACKEEND $OPTIONS /certs/${DOMAIN}.key /certs/${DOMAIN}.crt
 
 
+#### Install ocserv
+RUN apk add --update --no-cache musl-dev iptables libev openssl gnutls-dev readline-dev libnl3-dev lz4-dev libseccomp-dev gnutls-utils
+
+
 ### Install haproxy
 RUN apk add --no-cache haproxy
+
 
 ADD entrypoint.sh /usr/local/bin
 ADD gencert.sh /usr/local/bin
