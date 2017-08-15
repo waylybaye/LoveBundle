@@ -4,9 +4,25 @@ export HA_SS_TLS_DOMAINS="${SS_TLS_DOMAINS//,/ }"
 export HA_SS_HTTP_DOMAINS="${SS_HTTP_DOMAINS//,/ }"
 export HA_SSR_HTTP_DOMAINS="${SSR_HTTP_DOMAINS//,/ }"
 export HA_SSR_TLS_DOMAINS="${SSR_TLS_DOMAINS//,/ }"
-export HA_V2RAY_DOMAINS="${V2RAY_DOMAINS//,/ }"
 export HA_HTTP2_DOMAIN="${HTTP2_DOMAIN//,/ }"
 cat /etc/love/templates/haproxy.conf | mo > /etc/love/haproxy.conf
+
+if [ -f "/srv/certs/${V2RAY_TLS_DOMAIN}.crt" ]; then
+  export V2RAY_TLS_CERT_FILE="/srv/certs/${V2RAY_TLS_DOMAIN}.crt"
+  export V2RAY_TLS_KEY_FILE="/srv/certs/${V2RAY_TLS_DOMAIN}.key"
+else
+  export V2RAY_TLS_CERT_FILE="/srv/certs/${V2RAY_TLS_DOMAIN}-self-signed.crt"
+  export V2RAY_TLS_KEY_FILE="/srv/certs/${V2RAY_TLS_DOMAIN}-self-signed.key"
+fi
+
+if [ -f "/srv/certs/${V2RAY_WS_DOMAIN}.crt" ]; then
+  export V2RAY_WS_CERT_FILE="/srv/certs/${V2RAY_WS_DOMAIN}.crt"
+  export V2RAY_WS_KEY_FILE="/srv/certs/${V2RAY_WS_DOMAIN}.crt"
+else
+  export V2RAY_WS_CERT_FILE="/srv/certs/${V2RAY_WS_DOMAIN}.self-signed.crt"
+  export V2RAY_WS_KEY_FILE="/srv/certs/${V2RAY_WS_DOMAIN}.self-signed.key"
+fi
+
 cat /etc/love/templates/v2ray.json | mo > /etc/love/v2ray.json
 cat /etc/love/templates/squid.conf | mo > /etc/love/squid.conf
 

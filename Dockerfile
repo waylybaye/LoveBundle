@@ -60,7 +60,7 @@ ENV SSR_TLS_DOMAINS cloudflare.com
 # V2ray
 ENV ENABLE_V2RAY true
 ENV V2RAY_INSECURE false
-ENV V2RAY_DOMAINS yahoo.com
+ENV V2RAY_TLS_DOMAIN yahoo.com
 
 # nghttpx
 ENV ENABLE_HTTP2 true
