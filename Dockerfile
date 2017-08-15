@@ -6,6 +6,8 @@ MAINTAINER HyperApp <hyperappcloud@gmail.com>
 ARG SS_VER=3.0.8
 ARG SS_OBFS_VER=0.0.3
 ARG V2RAY_VER=2.34
+ARG OC_VERSION=0.11.8
+
 
 #### VOLUME
 ENV HTTP_PORT=
