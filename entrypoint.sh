@@ -52,6 +52,7 @@ cat /etc/love/templates/squid.conf | mo > /etc/love/squid.conf
 cat /etc/love/templates/ocserv.conf | mo > /etc/love/ocserv.conf
 
 if [ -n "$ENABLE_OCSERV"]; then
+  echo "create ocserv accounts ..."
   echo "${LOVE_PASSWORD}" | ocpasswd -c /etc/love/ocpasswd "${LOVE_USERNAME}"
 fi
 
