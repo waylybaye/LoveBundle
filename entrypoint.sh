@@ -51,6 +51,10 @@ cat /etc/love/templates/v2ray.json | mo > /etc/love/v2ray.json
 cat /etc/love/templates/squid.conf | mo > /etc/love/squid.conf
 cat /etc/love/templates/ocserv.conf | mo > /etc/love/ocserv.conf
 
+if [ -n "$ENABLE_OCSERV"]; then
+  echo "${LOVE_PASSWORD}" | ocpasswd -c /etc/love/ocpasswd "${LOVE_USERNAME}"
+fi
+
 if [ -n "$ENABLE_HTTP2" ];then
   htpasswd -bc /etc/love/passwd "${LOVE_USERNAME}" "${LOVE_PASSWORD}"
   CHOWN=$(/usr/bin/which chown)
