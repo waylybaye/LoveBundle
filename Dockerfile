@@ -89,7 +89,8 @@ RUN apk add --no-cache curl bash && \
     chmod +x /usr/local/bin/mo
 
 #### Install supervisord ####
-RUN apk add --no-cache python py-pip && pip install supervisor
+RUN apk add --no-cache python py-pip && pip install supervisor supervisor-stdout
+
 
 
 #### Install Shadowsocks ####

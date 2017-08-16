@@ -1,9 +1,9 @@
 #!/bin/sh
 
 if [ ! -z "$HTTP2_DOMAIN" ]; then
-  if [ -f "/srv/certs/${HTTP2_DOMAIN}.crt" ]; then
-    export NGHTTPX_CERT="/srv/certs/${HTTP2_DOMAIN}.crt"
-    export NGHTTPX_KEY="/srv/certs/${HTTP2_DOMAIN}.key"
+  if [ -f "${CERTS_ROOT}/${HTTP2_DOMAIN}.crt" ]; then
+    export NGHTTPX_CERT="${CERTS_ROOT}/${HTTP2_DOMAIN}.crt"
+    export NGHTTPX_KEY="${CERTS_ROOT}/${HTTP2_DOMAIN}.key"
   else
     echo "Generating ${HTTP2_DOMAIN} self-signed cert ..."
     gencert.sh $HTTP2_DOMAIN
@@ -20,9 +20,9 @@ export HA_SSR_TLS_DOMAINS="${SSR_TLS_DOMAINS//,/ }"
 cat /etc/love/templates/haproxy.conf | mo > /etc/love/haproxy.conf
 
 if [ ! -z "$V2RAY_TLS_DOMAIN" ]; then
-  if [ -f "/srv/certs/${V2RAY_TLS_DOMAIN}.crt" ]; then
-    export V2RAY_TLS_CERT_FILE="/srv/certs/${V2RAY_TLS_DOMAIN}.crt"
-    export V2RAY_TLS_KEY_FILE="/srv/certs/${V2RAY_TLS_DOMAIN}.key"
+  if [ -f "${CERTS_ROOT}/${V2RAY_TLS_DOMAIN}.crt" ]; then
+    export V2RAY_TLS_CERT_FILE="${CERTS_ROOT}/${V2RAY_TLS_DOMAIN}.crt"
+    export V2RAY_TLS_KEY_FILE="${CERTS_ROOT}/${V2RAY_TLS_DOMAIN}.key"
   else
     echo "Generating ${V2RAY_TLS_DOMAIN} self-signed cert ..."
     gencert.sh $V2RAY_TLS_DOMAIN
@@ -32,9 +32,9 @@ if [ ! -z "$V2RAY_TLS_DOMAIN" ]; then
 fi
 
 if [ ! -z "$V2RAY_WS_DOMAIN" ]; then
-  if [ -f "/srv/certs/${V2RAY_WS_DOMAIN}.crt" ]; then
-    export V2RAY_WS_CERT_FILE="/srv/certs/${V2RAY_WS_DOMAIN}.crt"
-    export V2RAY_WS_KEY_FILE="/srv/certs/${V2RAY_WS_DOMAIN}.key"
+  if [ -f "${CERTS_ROOT}/${V2RAY_WS_DOMAIN}.crt" ]; then
+    export V2RAY_WS_CERT_FILE="${CERTS_ROOT}/${V2RAY_WS_DOMAIN}.crt"
+    export V2RAY_WS_KEY_FILE="${CERTS_ROOT}/${V2RAY_WS_DOMAIN}.key"
   else
     echo "Generating ${V2RAY_WS_DOMAIN} self-signed cert ..."
     gencert.sh $V2RAY_WS_DOMAIN
@@ -44,13 +44,13 @@ if [ ! -z "$V2RAY_WS_DOMAIN" ]; then
 fi
 
 
-if [ ! -z "$OCSERV_DOMAIN" ] then;
+if [ ! -z "$OCSERV_DOMAIN" ]; then
   gencert.sh $OCSERV_DOMAIN $LOVE_USERNAME $LOVE_PASSWORD
   export OCSERV_CA_CERT="$CA_ROOT/hyperapp-ca-key.pem"
 
-  if [ -f "/srv/certs/${OCSERV_DOMAIN}.crt" ]; then
-    export OCSERV_CERT="/srv/certs/${OCSERV_DOMAIN}.crt"
-    export OCSERV_KEY="/srv/certs/${OCSERV_DOMAIN}.key"
+  if [ -f "${CERTS_ROOT}/${OCSERV_DOMAIN}.crt" ]; then
+    export OCSERV_CERT="${CERTS_ROOT}/${OCSERV_DOMAIN}.crt"
+    export OCSERV_KEY="${CERTS_ROOT}/${OCSERV_DOMAIN}.key"
   else
     export OCSERV_CERT="${CA_ROOT}/${OCSERV_DOMAIN}.self-signed.crt"
     export OCSERV_KEY="${CA_ROOT}/${OCSERV_DOMAIN}.self-signed.key"
