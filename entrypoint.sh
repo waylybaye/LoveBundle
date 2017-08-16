@@ -73,7 +73,6 @@ if [ ! -z "$OCSERV_DOMAIN" ]; then
   fi
 
   iptables -t nat -A POSTROUTING -s ${OC_LAN_NETWORK}/24 -j MASQUERADE
-  iptables -A FORWARD -s ${OC_LAN_NETWORK}/24 -j ACCEPT
 fi
 
 
