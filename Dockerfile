@@ -183,12 +183,9 @@ RUN buildDeps="xz gcc autoconf make linux-headers libev-dev  "; \
 	&& apk del --purge $buildDeps \
         && rm -rf /src
 
-
 ### Install haproxy
 RUN apk add --no-cache haproxy
-
 
 ADD entrypoint.sh /usr/local/bin
 ADD gencert.sh /usr/local/bin
 ENTRYPOINT ["entrypoint.sh"]
-CMD ["supervisord", "--nodaemon", "--configuration", "/etc/love/supervisord.conf"]
