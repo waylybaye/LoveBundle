@@ -1,0 +1,78 @@
+{
+  "log": {
+    "access": "/dev/stdout",
+    "error": "/dev/stderr",
+    "loglevel": "warning"
+  },
+  "inbound": {
+    "protocol": "vmess",
+    "port": {{V2RAY_WS_PORT}},
+    "settings": {
+      "udp": true,
+      "clients": [
+        {
+          "id": "{{V2RAY_UUID}}",
+          "alterId": 32,
+          "level": 1
+        }
+      ]
+    },
+    "streamSettings": {
+      "network": "ws",
+      "security": "tls",
+      "tlsSettings": {
+        "serverName": "{{V2RAY_WS_DOMAIN}}",
+        "allowInsecure": true,
+        "certificates": [
+          {
+            "certificateFile": "{{V2RAY_WS_CERT_FILE}}",
+            "keyFile": "{{V2RAY_WS_KEY_FILE}}"
+          }
+        ]
+      },
+      "wsSettings": {
+        "connectionReuse": true,
+        "path": "/"
+      }
+    }
+  },
+  "outbound": {
+    "protocol": "freedom",
+    "settings": {}
+  },
+  "outboundDetour": [
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "rules": [
+        {
+          "type": "field",
+          "ip": [
+            "0.0.0.0/8",
+            "10.0.0.0/8",
+            "100.64.0.0/10",
+            "127.0.0.0/8",
+            "169.254.0.0/16",
+            "172.16.0.0/12",
+            "192.0.0.0/24",
+            "192.0.2.0/24",
+            "192.168.0.0/16",
+            "198.18.0.0/15",
+            "198.51.100.0/24",
+            "203.0.113.0/24",
+            "::1/128",
+            "fc00::/7",
+            "fe80::/10"
+          ],
+          "outboundTag": "blocked"
+        }
+      ]
+    }
+  }
+}
