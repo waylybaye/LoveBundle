@@ -35,8 +35,8 @@ tls_www_server
 _EOF_
 
 cat > hyperapp-client.tmpl <<_EOF_
-cn = "client@${DOMAIN}"
-uid = "client@${DOMAIN}"
+cn = "${CLIENT}"
+uid = "${CLIENT}"
 unit = "HyperApp"
 expiration_days = 3650
 signing_key
