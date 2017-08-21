@@ -59,7 +59,7 @@ fi
 
 cat /etc/love/templates/v2ray_tls.json | mo > /etc/love/v2ray_tls.json
 cat /etc/love/templates/v2ray_ws.json | mo > /etc/love/v2ray_ws.json
-cat /etc/love/templates/squid.conf | mo > /etc/love/squid.conf
+cat /etc/love/templates/v2ray_http.json | mo > /etc/love/v2ray_http.json
 cat /etc/love/templates/ocserv.conf | mo > /etc/love/ocserv.conf
 
 if [ ! -z "$OCSERV_DOMAIN" ]; then
@@ -75,24 +75,6 @@ if [ ! -z "$OCSERV_DOMAIN" ]; then
   iptables -t nat -A POSTROUTING -s ${OC_LAN_NETWORK}/24 -j MASQUERADE
 fi
 
-
-if [ ! -z "$HTTP2_DOMAIN" ]; then
-  htpasswd -bc /etc/love/passwd "${LOVE_USERNAME}" "${LOVE_PASSWORD}"
-  CHOWN=$(/usr/bin/which chown)
-  SQUID=$(/usr/bin/which squid)
-  "$CHOWN" -R squid:squid /var/cache/squid
-  "$CHOWN" -R squid:squid /var/log/squid
-
-  if [ ! -f  /var/spool/squid ]; then
-    echo "initializing spool ..."
-    mkdir /var/spool/squid
-  fi
-
-  if [ ! -f  /var/cache/squid ]; then
-    echo "initializing cache ..."
-    squid -f /etc/love/squid.conf -zN
-  fi
-fi
 
 cat /etc/love/templates/supervisord.conf | mo > /etc/love/supervisord.conf
 exec supervisord --nodaemon --configuration /etc/love/supervisord.conf "$@"
