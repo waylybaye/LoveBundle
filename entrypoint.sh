@@ -46,7 +46,7 @@ fi
 
 if [ ! -z "$OCSERV_DOMAIN" ]; then
   gencert.sh $OCSERV_DOMAIN $LOVE_USERNAME $LOVE_PASSWORD
-  export OCSERV_CA_CERT="$CA_ROOT/hyperapp-ca-key.pem"
+  export OCSERV_CA_CERT="$CA_ROOT/hyperapp-ca-cert.pem"
 
   if [ -f "${CERTS_ROOT}/${OCSERV_DOMAIN}.crt" ]; then
     export OCSERV_CERT="${CERTS_ROOT}/${OCSERV_DOMAIN}.crt"
