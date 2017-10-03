@@ -89,16 +89,18 @@ RUN apk add --no-cache python py-pip && pip install supervisor supervisor-stdout
 
 #### Install Shadowsocks ####
 RUN set -ex && \
+    apk add --no-cache udns && \
     apk add --no-cache --virtual .build-deps \
                                 git \
                                 autoconf \
                                 automake \
                                 make \
                                 build-base \
+                                curl \
                                 libev-dev \
+                                c-ares-dev \
                                 libtool \
                                 linux-headers \
-                                udns-dev \
                                 libsodium-dev \
                                 mbedtls-dev \
                                 pcre-dev \
