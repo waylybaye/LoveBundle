@@ -1,11 +1,11 @@
-FROM alpine:edge
+FROM alpine
 MAINTAINER HyperApp <hyperappcloud@gmail.com>
 
 #### Build ARGS ####
 
 ARG SS_VER=3.1.0
 ARG SS_OBFS_VER=0.0.3
-ARG V2RAY_VER=2.45
+ARG V2RAY_VER=2.46
 ARG OC_VERSION=0.11.8
 
 
