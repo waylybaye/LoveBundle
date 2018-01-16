@@ -3,10 +3,10 @@ MAINTAINER HyperApp <hyperappcloud@gmail.com>
 
 #### Build ARGS ####
 
-ARG SS_VER=3.1.2
+ARG SS_VER=3.1.3
 ARG SS_OBFS_VER=0.0.5
-ARG V2RAY_VER=2.50
-ARG OC_VERSION=0.11.8
+ARG V2RAY_VER=3.6
+ARG OC_VERSION=0.11.10
 
 
 #### VOLUME
