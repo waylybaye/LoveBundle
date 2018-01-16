@@ -146,8 +146,8 @@ RUN unzip /tmp/shadowsocksr-manyuser.zip -d /tmp/ \
 RUN curl -L -o /tmp/v2ray.zip \
         https://github.com/v2ray/v2ray-core/releases/download/v${V2RAY_VER}/v2ray-linux-64.zip \
     && unzip /tmp/v2ray.zip -d /tmp/ \
-    && mv /tmp/v2ray-v${V2RAY_VER}-linux-64/{v2ray,v2ctl} /usr/local/bin/ \
-    && chmod +x /usr/local/bin/{v2ray,v2ctl} \
+    && mv /tmp/v2ray-v${V2RAY_VER}-linux-64/v2* /usr/local/bin/ \
+    && chmod +x /usr/local/bin/v2ray /usr/local/bin/v2ctl \
     && rm -rf /tmp/v2ray*
 
 
