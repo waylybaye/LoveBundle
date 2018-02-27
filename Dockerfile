@@ -5,7 +5,7 @@ MAINTAINER HyperApp <hyperappcloud@gmail.com>
 
 ARG SS_VER=3.1.3
 ARG SS_OBFS_VER=0.0.5
-ARG V2RAY_VER=3.6
+ARG V2RAY_VER=3.10
 ARG OC_VERSION=0.11.10
 
 
