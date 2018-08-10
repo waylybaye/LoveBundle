@@ -153,7 +153,7 @@ RUN curl -L -o /tmp/v2ray.zip \
 
 #### Install nghttpx
 
-RUN apk add --no-cache nghttp2 openssl ca-certificates squid apache2-utils
+RUN apk add --no-cache nghttp2 openssl ca-certificates apache2-utils
 #CMD nghttpx --http2-proxy -f $FRONTEND -b $BACKEEND $OPTIONS /certs/${DOMAIN}.key /certs/${DOMAIN}.crt
 
 
