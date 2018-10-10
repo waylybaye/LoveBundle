@@ -5,9 +5,8 @@ MAINTAINER HyperApp <hyperappcloud@gmail.com>
 
 ARG SS_VER=3.2.0
 ARG SS_OBFS_VER=0.0.5
-ARG V2RAY_VER=3.38
 ARG OC_VERSION=0.11.11
-
+# V2Ray is always installed from latest official build
 
 #### VOLUME
 ENV TLS_PORT=
@@ -143,13 +142,10 @@ RUN unzip /tmp/shadowsocksr-manyuser.zip -d /tmp/ \
     && rm /tmp/shadowsocksr-manyuser.zip
 
 #### Install V2ray
-RUN curl -L -o /tmp/v2ray.zip \
-        https://github.com/v2ray/v2ray-core/releases/download/v${V2RAY_VER}/v2ray-linux-64.zip \
-    && unzip /tmp/v2ray.zip -d /tmp/ \
-    && mv /tmp/v2ray-v${V2RAY_VER}-linux-64/v2* /usr/local/bin/ \
-    && chmod +x /usr/local/bin/v2ray /usr/local/bin/v2ctl \
-    && rm -rf /tmp/v2ray*
-
+COPY --from=v2ray/official:latest  /usr/bin/v2ray/v2ray /usr/bin/v2ray/
+COPY --from=v2ray/official:latest  /usr/bin/v2ray/v2ctl /usr/bin/v2ray/
+COPY --from=v2ray/official:latest  /usr/bin/v2ray/geoip.dat /usr/bin/v2ray/
+COPY --from=v2ray/official:latest  /usr/bin/v2ray/geosite.dat /usr/bin/v2ray/
 
 #### Install nghttpx
 
