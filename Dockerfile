@@ -142,10 +142,10 @@ RUN unzip /tmp/shadowsocksr-manyuser.zip -d /tmp/ \
     && rm /tmp/shadowsocksr-manyuser.zip
 
 #### Install V2ray
-COPY --from=v2ray/official:latest  /usr/bin/v2ray/v2ray /usr/bin/v2ray/
-COPY --from=v2ray/official:latest  /usr/bin/v2ray/v2ctl /usr/bin/v2ray/
-COPY --from=v2ray/official:latest  /usr/bin/v2ray/geoip.dat /usr/bin/v2ray/
-COPY --from=v2ray/official:latest  /usr/bin/v2ray/geosite.dat /usr/bin/v2ray/
+COPY --from=v2ray/official:latest  /usr/bin/v2ray/v2ray /usr/local/bin/
+COPY --from=v2ray/official:latest  /usr/bin/v2ray/v2ctl /usr/local/bin/
+COPY --from=v2ray/official:latest  /usr/bin/v2ray/geoip.dat /usr/local/bin/
+COPY --from=v2ray/official:latest  /usr/bin/v2ray/geosite.dat /usr/local/bin/
 
 #### Install nghttpx
 
