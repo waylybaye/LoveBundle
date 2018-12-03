@@ -3,7 +3,7 @@ MAINTAINER HyperApp <hyperappcloud@gmail.com>
 
 #### Build ARGS ####
 
-ARG SS_VER=3.2.1
+ARG SS_VER=3.2.3
 ARG SS_OBFS_VER=0.0.5
 ARG OC_VERSION=0.11.11
 # V2Ray is always installed from latest official build
